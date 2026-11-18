@@ -6,6 +6,15 @@ const mint = '#9ef4dc';
 const amber = '#ffcb7d';
 const ink = '#152129';
 const duration = 8;
+const controls = [...document.querySelectorAll('#settings input')];
+const settings = Object.fromEntries(controls.map(input => [
+  input.id, input.type === 'number' ? Number(input.value) : input.value
+]));
+controls.forEach(input => input.addEventListener('input', () => {
+  if (input.type === 'number' && (input.value === '' || !input.validity.valid)) return;
+  settings[input.id] = input.type === 'number' ? input.valueAsNumber : input.value;
+  draw();
+}));
 
 function rect(x, y, w, h, color) {
   ctx.fillStyle = color;
@@ -21,8 +30,8 @@ function label(value, x, y, size = 24, color = mint) {
 
 function render(t) {
   label('Q = V / t', 60, 160, 56);
-  if (t > 2) label('126 L ÷ 3 s', 60, 230, 40);
-  if (t > 4) label('= 42 L/s', 60, 302, 52, amber);
+  if (t > 2) label(`${settings.volume} L ÷ ${settings.seconds} s`, 60, 230, 40);
+  if (t > 4) label(`= ${Number((settings.volume / settings.seconds).toFixed(3))} L/s`, 60, 302, 52, amber);
 }
 
 const seek = document.querySelector('#seek');
@@ -63,6 +72,13 @@ play.addEventListener('click', () => {
 seek.addEventListener('input', () => {
   position = Number(seek.value);
   draw();
+});
+
+document.querySelector('#save').addEventListener('click', () => {
+  const link = document.createElement('a');
+  link.download = 'flow-equation.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
 });
 
 draw();
