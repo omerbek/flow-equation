@@ -9,3 +9,10 @@ Hacmin süreye bölünmesiyle debinin nasıl hesaplandığını göster.
 ## İlham kaynağı
 
 Bu bağımsız sahne sentetik su istasyonu örnekleri kullanır. [Kaynak proje](https://github.com/ManimCommunity/manim).
+
+## Sahne ayarları
+
+- Hacim (L)
+- Süre (s)
+
+Sekiz saniyelik zaman çizelgesinden bir kare seçip **PNG indir** ile 720 × 405 piksel dışa aktarabilirsin.
